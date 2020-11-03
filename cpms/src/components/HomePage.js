@@ -1,15 +1,16 @@
 import React from 'react';
-import SideBar from './SideBar';
+import SideBarResident from './SideBarResident';
+import SideBarAdmin from './SideBarAdmin';
 import { Row, Col } from 'antd';
 
 const HomePage = () => {
     return (
         <Row>
-            <Col span={4}>
-                <SideBar />
+            <Col span={4.5}>
+                <SideBarAdmin />
 
             </Col>
-            <Col span={6}>
+            <Col span={5.5}>
                 content on the right
             </Col>
         </Row>
