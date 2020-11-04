@@ -1,21 +1,21 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import SideBarAdmin from '../../components/SideBarAdmin';
+import SideBarResident from '../../components/SideBarResident';
 
 
-const MaintenanceAdmin = () => {
+const AccountResident = () => {
     return (
         <Row>
             <Col span={4.5}>
-                <SideBarAdmin />
+                <SideBarResident />
 
             </Col>
             <Col span={5.5}>
-                Here is Maintenance for Admin
+                Here is Account for Resident
             </Col>
         </Row>
     )
 
 }
 
-export default MaintenanceAdmin;
+export default AccountResident;

@@ -1,15 +1,19 @@
 import { Layout } from 'antd';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Events from './pages/admin/Events';
-import Reservations from './pages/admin/Reservation';
-import Maintenance from './pages/admin/Maintenance';
-import Payments from './pages/admin/Payments';
-import Residents from './pages/admin/Residents';
-import Messages from './pages/admin/Messages';
+import EventsAdmin from './pages/admin/Events';
+import ReservationsAdmin from './pages/admin/Reservations';
+import MaintenanceAdmin from './pages/admin/Maintenance';
+import PaymentsAdmin from './pages/admin/Payments';
+import ResidentsAdmin from './pages/admin/Residents';
+import MessagesAdmin from './pages/admin/Messages';
 
-
-
+import CalendarResident from './pages/resident/Calendar';
+import AccountResident from './pages/resident/Account';
+import BookAmenityResident from './pages/resident/BookAmenity';
+import ReservationsResident from './pages/resident/Reservations';
+import MaintenanceResident from './pages/resident/Maintenance';
+import MessagesResident from './pages/resident/Messages';
 
 const { Header, Footer, Content } = Layout;
 
@@ -18,23 +22,30 @@ function App() {
     <Layout>
       <Header>
         {/* <img src={starlinkLogo} className="App-logo" alt="logo" /> */}
-        <p className="title">
+        <text className="title">
           CPMS
-        </p>
+        </text>
       </Header>
       <Content>
         <Router>
 
           <Switch>
-            <Route path="/" exact component={Events} />
-            <Route path="/admin/events" exact component={Events} />
-            <Route path="/admin/reservations" component={Reservations} />
-            <Route path="/admin/maintenance" exact component={Maintenance} />
-            <Route path="/admin/payments" component={Payments} />
-            <Route path="/admin/residents" component={Residents} />
-            <Route path="/admin/messages" component={Messages} />
-
-
+            <Route path="/admin" exact component={EventsAdmin} />
+            <Route path="/admin/events" exact component={EventsAdmin} />
+            <Route path="/admin/reservations" component={ReservationsAdmin} />
+            <Route path="/admin/maintenance" exact component={MaintenanceAdmin} />
+            <Route path="/admin/payments" component={PaymentsAdmin} />
+            <Route path="/admin/residents" component={ResidentsAdmin} />
+            <Route path="/admin/messages" component={MessagesAdmin} />
+          </Switch>
+          <Switch>
+            <Route path="/resident" exact component={CalendarResident} />
+            <Route path="/resident/calendar" exact component={CalendarResident} />
+            <Route path="/resident/account" exact component={AccountResident} />
+            <Route path="/resident/bookamenity" exact component={BookAmenityResident} />
+            <Route path="/resident/reservations" exact component={ReservationsResident} />
+            <Route path="/resident/maintenance" exact component={MaintenanceResident} />
+            <Route path="/resident/messages" exact component={MessagesResident} />
           </Switch>
         </Router>
 

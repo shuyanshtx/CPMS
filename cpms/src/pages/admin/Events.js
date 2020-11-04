@@ -3,8 +3,7 @@ import SideBarAdmin from '../../components/SideBarAdmin';
 import { Row, Col } from 'antd';
 
 
-
-const Events = () => {
+const EventsAdmin = () => {
     return (
         <Row>
             <Col span={4.5}>
@@ -12,12 +11,11 @@ const Events = () => {
 
             </Col>
             <Col span={5.5}>
-                Here is Events
-
-             </Col>
+                Here is Events for Admin
+            </Col>
         </Row>
     )
 
 }
 
-export default Events;
+export default EventsAdmin;

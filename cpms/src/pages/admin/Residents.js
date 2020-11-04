@@ -3,7 +3,7 @@ import { Row, Col } from 'antd';
 import SideBarAdmin from '../../components/SideBarAdmin';
 
 
-const Residents = () => {
+const ResidentsAdmin = () => {
     return (
         <Row>
             <Col span={4.5}>
@@ -11,12 +11,11 @@ const Residents = () => {
 
             </Col>
             <Col span={5.5}>
-                Here is Residents
-
-        </Col>
+                Here is Residents for Admin
+            </Col>
         </Row>
     )
 
 }
 
-export default Residents;
+export default ResidentsAdmin;
