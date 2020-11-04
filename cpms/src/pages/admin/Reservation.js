@@ -1,9 +1,9 @@
 import React from 'react';
-import SideBarResident from './SideBarResident';
-import SideBarAdmin from './SideBarAdmin';
 import { Row, Col } from 'antd';
+import SideBarAdmin from '../../components/SideBarAdmin';
 
-const HomePage = () => {
+
+const Reservation = () => {
     return (
         <Row>
             <Col span={4.5}>
@@ -11,11 +11,12 @@ const HomePage = () => {
 
             </Col>
             <Col span={5.5}>
-                content on the right
-            </Col>
+                Here is Reservation
+
+        </Col>
         </Row>
     )
 
 }
 
-export default HomePage;
+export default Reservation;
