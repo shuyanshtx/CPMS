@@ -50,6 +50,9 @@ public class MySQLTableCreation {
             sql = "INSERT INTO users VALUES('1111', '3229c1097c00d497a0fd282d586be050', 'John', 'Smith', '101', 'johnsmith101@gmail.com', '0123456789', 'resident')";
             statement.executeUpdate(sql);
 
+            sql = "INSERT INTO users VALUES('1112', '3229c1097c00d497a0fd282d586be051', 'Emma', 'Smith', null, 'emmasmith101@gmail.com', '9876543210', 'staff')";
+            statement.executeUpdate(sql);
+
             conn.close();
             System.out.println("Import done successfully");
         } catch (Exception e) {
