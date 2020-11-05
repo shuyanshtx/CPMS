@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="CPMS MySQL" uuid="add9fd56-b0f6-4309-a532-b06fbbbac205">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://cpms-instance.cwlklefwchrb.us-west-1.rds.amazonaws.com:3306/cpms</jdbc-url>
+    </data-source>
+  </component>
+</project>
