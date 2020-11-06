@@ -1,3 +1,9 @@
+# Default ignored files
+/shelf/
+# Editor-based HTTP Client requests
+/httpRequests/
+.idea/
+target/
 node_modules
 package-lock.json
 package.json
