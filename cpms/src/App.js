@@ -15,6 +15,8 @@ import ReservationsResident from './pages/resident/Reservations';
 import MaintenanceResident from './pages/resident/Maintenance';
 import MessagesResident from './pages/resident/Messages';
 
+import LogIn from './pages/Login';
+
 const { Header, Footer, Content } = Layout;
 
 function App() {
@@ -46,6 +48,9 @@ function App() {
             <Route path="/resident/reservations" exact component={ReservationsResident} />
             <Route path="/resident/maintenance" exact component={MaintenanceResident} />
             <Route path="/resident/messages" exact component={MessagesResident} />
+          </Switch>
+          <Switch>
+            <Route path="/login" exact component={LogIn} />
           </Switch>
         </Router>
 
