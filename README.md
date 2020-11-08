@@ -6,7 +6,7 @@
 Go inside the frontend folder, and do:
 
 ```
-npm install -g frontend
+npm install
 ```
 
 If permission denial error, then https://stackoverflow.com/questions/48910876/error-eacces-permission-denied-access-usr-local-lib-node-modules.
