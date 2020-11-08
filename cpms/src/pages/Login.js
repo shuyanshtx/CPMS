@@ -18,7 +18,8 @@ const tailLayout = {
 
 const LogIn = () => {
     const onFinish = (values) => {
-        console.log('Success:', values);
+        const email = values.email
+        const password = values.password
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -38,12 +39,12 @@ const LogIn = () => {
                 onFinishFailed={onFinishFailed}
             >
                 <Form.Item
-                    label="Username"
-                    name="username"
+                    label="Email"
+                    name="email"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your username!',
+                            message: 'Please input your email!',
                         },
                     ]}
                 >
