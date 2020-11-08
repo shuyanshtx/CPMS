@@ -32,7 +32,7 @@ public class MySQLTableCreation {
 
             //Step 3 Create new tables
             sql = "CREATE TABLE users ("
-                    + "id INT NOT NULL,"
+                    + "user_id INT NOT NULL,"
                     + "password VARCHAR(255) NOT NULL,"
                     + "first_name VARCHAR(255),"
                     + "last_name VARCHAR(255),"
@@ -42,7 +42,7 @@ public class MySQLTableCreation {
                     + "user_type VARCHAR(255),"
 //                    + "created_at TIMESTAMP,"
 //                    + "updated_at TIMESTAMP"
-                    + "PRIMARY KEY (id)"
+                    + "PRIMARY KEY (user_id)"
                     + ")";
             statement.executeUpdate(sql);
 
@@ -50,7 +50,7 @@ public class MySQLTableCreation {
             sql = "INSERT INTO users VALUES('1111', '3229c1097c00d497a0fd282d586be050', 'John', 'Smith', '101', 'johnsmith101@gmail.com', '0123456789', 'resident')";
             statement.executeUpdate(sql);
 
-            sql = "INSERT INTO users VALUES('1112', '3229c1097c00d497a0fd282d586be051', 'Emma', 'Smith', null, 'emmasmith101@gmail.com', '9876543210', 'staff')";
+            sql = "INSERT INTO users VALUES('1112', '3229c1097c00d497a0fd282d586be051', 'Emma', 'Smith', null, 'emmasmith101@gmail.com', '9876543210', 'admin')";
             statement.executeUpdate(sql);
 
             conn.close();
