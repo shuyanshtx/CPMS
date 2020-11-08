@@ -22,7 +22,8 @@ java MySQLTableCreation
 ```
 
 Available Endpoints:
+```
 localhost:3000/login
 localhost:3000/resident/...
 localhost:3000/admin/...
-
+```
