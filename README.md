@@ -24,20 +24,44 @@ Go to http://localhost:3000/ to see the current endpoints [ implemented with Rea
 
 ```
 localhost:3000/login
-localhost:3000/resident/(...) 
+localhost:3000/resident/(...)
 localhost:3000/admin/(...)
 (...) -> click different tabs on the page to get to the different sub-endpoints
 ```
 
 
-### How to create tables in the AWS MySQL database?
+### How to create tables or logics to support APIs in the AWS MySQL database?
 
 First, configure IntelliJ Data Source:
 ```
 File ==> New ==> Data Source ==> MySQL
 Type in AWS DB Connection Info in DBUtil
 ```
-Next, Go to the backend/db package,
+Next, edit configurations ("the little hammer")
+```
+Add configuration "+" sign ==> Tomcat Server -> local
+==> configure Application Server to be where the Tomcat is located
+==> untick "After launch"
+==> "Fix" ==> "CPMS:war_exploded"
+==> Apply ==> OK
+```
+
+For now, to test the API, send a POST request to http://localhost:8080/CPMS_war_exploded/login in Postman.
+We should have these results:
+```
+{
+    "user_id": "1111",
+    "first_name": "John",
+    "last_name": "Smith",
+    "unit_num": "101",
+    "email": "johnsmith101@gmail.com",
+    "phone": "0123456789",
+    "user_type": "resident",
+    "status": "OK"
+}
+```
+
+To create new tables, go to the backend/db package,
 edit MySQLTableCreation, and run the main function again to add new tables to the AWS database. Otherwise, type the commands below manually:
 ```
 javac MySQLDBUtil.java MySQLTableCreation.java
@@ -45,4 +69,4 @@ java MySQLTableCreation
 ```
 Again, if using IntelliJ, this can easily be done clicking the "run" button.
 
-#### P.S. target/* and src/* are folders containing the dependencies for the backend for ease of running the API.
+#### P.S. target/* and src/* are folders containing the dependencies for the backend for ease of running the API. To test the API, remember to configure Tomcat Local ia "fix" to be CPMS:war_exploded.
