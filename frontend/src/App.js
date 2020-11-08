@@ -50,7 +50,7 @@ function App() {
             <Route path="/resident/messages" exact component={MessagesResident} />
           </Switch>
           <Switch>
-            <Route path="/login" exact component={LogIn} />
+            <Route path="/" exact component={LogIn} />
           </Switch>
         </Router>
 

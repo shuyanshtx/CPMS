@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const layout = {
     labelCol: {
@@ -17,9 +18,16 @@ const tailLayout = {
 };
 
 const LogIn = () => {
+    let history = useHistory();
+
     const onFinish = (values) => {
-        const email = values.email
-        const password = values.password
+        const email = values.email;
+        const password = values.password;
+        if (values.email === 'resident1@gmail.com' && values.password === 'resident1') {
+            history.push('/resident')
+        } else if (values.email === 'admin@gmail.com' && values.password === 'admin') {
+            history.push('/admin')
+        }
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -28,7 +36,7 @@ const LogIn = () => {
 
     return (
         <div>
-            <br/><br/><br/><br/>
+            <br /><br /><br /><br />
             <Form
                 {...layout}
                 name="basic"
