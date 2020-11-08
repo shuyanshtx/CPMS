@@ -44,3 +44,5 @@ javac MySQLDBUtil.java MySQLTableCreation.java
 java MySQLTableCreation
 ```
 Again, if using IntelliJ, this can easily be done clicking the "run" button.
+
+#### P.S. target/* and src/* are folders containing the dependencies for the backend for ease of running the API.
