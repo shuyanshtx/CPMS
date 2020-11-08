@@ -1,7 +1,7 @@
 # CPMS
 community property management system
 
-To install dependencies, do:
+To install dependencies, go inside the cpms(front-end folder), and do:
 
 ```
 npm install -g cpms
@@ -15,7 +15,7 @@ https://stackoverflow.com/questions/39322089/node-js-port-3000-already-in-use-bu
 
 
 To create tables in the database, go to the backend/db package,
-Edit MySQLTableCreation to add new tables to the AWS database (use IntelliJ extension to show MySQL db)
+edit MySQLTableCreation to add new tables to the AWS database (use IntelliJ extension to show MySQL db)
 ```
 javac MySQLDBUtil.java MySQLTableCreation.java
 java MySQLTableCreation
