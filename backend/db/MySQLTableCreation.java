@@ -16,10 +16,12 @@ public class MySQLTableCreation {
                 return;
             }
 
+
             //Step 2 Drop tables in case they exist.
             Statement statement = conn.createStatement();
 
-            String sql = "DROP TABLE IF EXISTS users";
+
+            String sql = "SET foreign_key_checks = 0";
             statement.executeUpdate(sql);
 
             sql = "DROP TABLE IF EXISTS reservations";
@@ -28,7 +30,13 @@ public class MySQLTableCreation {
             sql = "DROP TABLE IF EXISTS events";
             statement.executeUpdate(sql);
 
-            sql = "DROP TABLE IF EXISTS maintenance";
+            sql = "DROP TABLE IF EXISTS maintance";
+            statement.executeUpdate(sql);
+
+            sql = "DROP TABLE IF EXISTS users";
+            statement.executeUpdate(sql);
+
+            sql = "SET foreign_key_checks = 1";
             statement.executeUpdate(sql);
 
             //Step 3 Create new tables : user , reservations, maintenance, events
@@ -61,7 +69,7 @@ public class MySQLTableCreation {
                     + ")";
             statement.executeUpdate(sql);
             // maintenance
-            sql = "CREATE TABLE maintenance ("
+            sql = "CREATE TABLE maintance ("
                     + "maintenance_id INT NOT NULL,"
                     + "report_user_id INT NOT NULL,"
                     + "staff_id INT NOT NULL,"
@@ -82,7 +90,7 @@ public class MySQLTableCreation {
                     + "status VARCHAR(255),"
                     + "created_at TIMESTAMP,"
                     + "updated_at TIMESTAMP,"
-                    + "PRIMARY KEY (event_id),"
+                    + "PRIMARY KEY (event_id)"
                     + ")";
             statement.executeUpdate(sql);
 
