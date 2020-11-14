@@ -21,16 +21,17 @@ public class MySQLTableCreation {
             String sql = "DROP TABLE IF EXISTS users";
             statement.executeUpdate(sql);
 
-//            String sql = "DROP TABLE IF EXISTS maintenance";
-//            statement.executeUpdate(sql);
-//
-//            String sql = "DROP TABLE IF EXISTS reservations";
-//            statement.executeUpdate(sql);
-//
-//            String sql = "DROP TABLE IF EXISTS users";
-//            statement.executeUpdate(sql);
+            sql = "DROP TABLE IF EXISTS maintenance";
+            statement.executeUpdate(sql);
 
-            //Step 3 Create new tables
+            sql = "DROP TABLE IF EXISTS reservations";
+            statement.executeUpdate(sql);
+
+            sql = "DROP TABLE IF EXISTS events";
+            statement.executeUpdate(sql);
+
+            //Step 3 Create new tables : user , reservations, maintaince, events
+            //users:
             sql = "CREATE TABLE users ("
                     + "user_id INT NOT NULL,"
                     + "password VARCHAR(255) NOT NULL,"
@@ -43,6 +44,44 @@ public class MySQLTableCreation {
 //                    + "created_at TIMESTAMP,"
 //                    + "updated_at TIMESTAMP"
                     + "PRIMARY KEY (user_id)"
+                    + ")";
+            statement.executeUpdate(sql);
+            // reservations
+            sql = "CREATE TABLE reservations ("
+                    + "reservation_id INT NOT NULL,"
+                    + "user_id INT NOT NULL,"
+                    + "reservation_time DATETIME,"
+                    + "amenity VARCHAR(255),"
+                    + "status VARCHAR(255),"
+                    + "created_at TIMESTAMP,"
+                    + "updated_at TIMESTAMP,"
+                    + "PRIMARY KEY (reservation_id),"
+                    + "FOREIGN KEY (user_id) REFERENCES users(user_id)"
+                    + ")";
+            statement.executeUpdate(sql);
+            //maintaince
+            sql = "CREATE TABLE maintaince ("
+                    + "maintaince_id INT NOT NULL,"
+                    + "report_user_id INT NOT NULL,"
+                    + "staff_id INT NOT NULL,"
+                    + "request_content VARCHAR(255),"
+                    + "status VARCHAR(255),"
+                    + "created_at TIMESTAMP,"
+                    + "updated_at TIMESTAMP,"
+                    + "PRIMARY KEY (maintaince_id),"
+                    + "FOREIGN KEY (report_user_id) REFERENCES users(user_id),"
+                    + "FOREIGN KEY (staff_id) REFERENCES users(user_id)"
+                    + ")";
+            statement.executeUpdate(sql);
+            //events
+            sql = "CREATE TABLE events ("
+                    + "event_id INT NOT NULL,"
+                    + "content VARCHAR(255),"
+                    + "event_time DATETIME,"
+                    + "status VARCHAR(255),"
+                    + "created_at TIMESTAMP,"
+                    + "updated_at TIMESTAMP,"
+                    + "PRIMARY KEY (event_id),"
                     + ")";
             statement.executeUpdate(sql);
 
