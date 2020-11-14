@@ -18,10 +18,8 @@ public class MySQLTableCreation {
 
             //Step 2 Drop tables in case they exist.
             Statement statement = conn.createStatement();
-            String sql = "DROP TABLE IF EXISTS users";
-            statement.executeUpdate(sql);
 
-            sql = "DROP TABLE IF EXISTS maintenance";
+            String sql = "DROP TABLE IF EXISTS users";
             statement.executeUpdate(sql);
 
             sql = "DROP TABLE IF EXISTS reservations";
@@ -30,7 +28,10 @@ public class MySQLTableCreation {
             sql = "DROP TABLE IF EXISTS events";
             statement.executeUpdate(sql);
 
-            //Step 3 Create new tables : user , reservations, maintaince, events
+            sql = "DROP TABLE IF EXISTS maintenance";
+            statement.executeUpdate(sql);
+
+            //Step 3 Create new tables : user , reservations, maintenance, events
             //users:
             sql = "CREATE TABLE users ("
                     + "user_id INT NOT NULL,"
@@ -59,16 +60,16 @@ public class MySQLTableCreation {
                     + "FOREIGN KEY (user_id) REFERENCES users(user_id)"
                     + ")";
             statement.executeUpdate(sql);
-            //maintaince
-            sql = "CREATE TABLE maintaince ("
-                    + "maintaince_id INT NOT NULL,"
+            // maintenance
+            sql = "CREATE TABLE maintenance ("
+                    + "maintenance_id INT NOT NULL,"
                     + "report_user_id INT NOT NULL,"
                     + "staff_id INT NOT NULL,"
                     + "request_content VARCHAR(255),"
                     + "status VARCHAR(255),"
                     + "created_at TIMESTAMP,"
                     + "updated_at TIMESTAMP,"
-                    + "PRIMARY KEY (maintaince_id),"
+                    + "PRIMARY KEY (maintenance_id),"
                     + "FOREIGN KEY (report_user_id) REFERENCES users(user_id),"
                     + "FOREIGN KEY (staff_id) REFERENCES users(user_id)"
                     + ")";
