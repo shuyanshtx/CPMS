@@ -16,7 +16,6 @@ public class MySQLTableCreation {
                 return;
             }
 
-
             //Step 2 Drop tables in case they exist.
             Statement statement = conn.createStatement();
 
@@ -30,7 +29,7 @@ public class MySQLTableCreation {
             sql = "DROP TABLE IF EXISTS events";
             statement.executeUpdate(sql);
 
-            sql = "DROP TABLE IF EXISTS maintance";
+            sql = "DROP TABLE IF EXISTS maintenance";
             statement.executeUpdate(sql);
 
             sql = "DROP TABLE IF EXISTS users";
@@ -69,7 +68,7 @@ public class MySQLTableCreation {
                     + ")";
             statement.executeUpdate(sql);
             // maintenance
-            sql = "CREATE TABLE maintance ("
+            sql = "CREATE TABLE maintenance ("
                     + "maintenance_id INT NOT NULL,"
                     + "report_user_id INT NOT NULL,"
                     + "staff_id INT NOT NULL,"
@@ -82,7 +81,7 @@ public class MySQLTableCreation {
                     + "FOREIGN KEY (staff_id) REFERENCES users(user_id)"
                     + ")";
             statement.executeUpdate(sql);
-            //events
+            // events
             sql = "CREATE TABLE events ("
                     + "event_id INT NOT NULL,"
                     + "content VARCHAR(255),"
