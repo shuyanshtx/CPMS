@@ -14,8 +14,10 @@ const CalendarResident = () => {
       <Col span={16}>
         <div
           style={{
-            width: 1600,
-            height: 800,
+            // width: 1600,
+            // height: 800,
+            width: 1100,
+            height: 400,
             border: "1px solid #d9d9d9",
             borderRadius: 4,
             margin: 10,
