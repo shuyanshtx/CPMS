@@ -1,4 +1,4 @@
-package entity;
+package backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -27,5 +27,4 @@ public class LoginResponseBody {
         this.user_type = user_type;
         this.status = status;
     }
-
 }

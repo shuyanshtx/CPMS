@@ -1,11 +1,6 @@
-package db;
-
-import entity.Reservation;
-import entity.ReservationRequestBody;
+package backend.db;
 
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MySQLConnection {
     private Connection conn;
@@ -82,97 +77,23 @@ public class MySQLConnection {
         return userInfo;
     }
 
-    public void makeReservation(ReservationRequestBody reservation) {
-        if (conn == null) {
-            System.err.println("DB connection failed.");
-            return;
-        }
-        String sql = "INSERT INTO reservations (reservation_id, user_id, reservation_time, amenity, status) VALUES (?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, reservation.getReservationId());
-            statement.setInt(2, reservation.getUserId());
-            statement.setString(3, reservation.getReservationTime());
-            statement.setString(4, reservation.getAmenity());
-            statement.setString(5, reservation.getStatus());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteReservation(int reservationId) {
-        if (conn == null) {
-            System.err.println("DB connection failed");
-            return;
-        }
-        String sql = "DELETE FROM reservations WHERE reservation_id = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, reservationId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Set<Integer> getReservationIds(int userId) {
-        if (conn == null) {
-            System.err.println("DB Connection failed");
-            return new HashSet<>();
-        }
-
-        Set<Integer> reservationsIdsSet = new HashSet<>();
-
-        try {
-            String sql = "SELECT reservation_id FROM reservations WHERE user_id = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, userId);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                int reservationId = rs.getInt("reservation_id");
-                reservationsIdsSet.add(reservationId);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return reservationsIdsSet;
-    }
-
-    public Set<Reservation> getReservations(int userId) {
-        if (conn == null) {
-            System.err.println("DB connection failed");
-            return new HashSet<>();
-        }
-
-        Set<Reservation> reservationsSet = new HashSet<>();
-        Set<Integer> reservationIds = getReservationIds(userId);
-
-        String sql = "SELECT * FROM reservations WHERE reservation_id = ?";
-        try {
-            PreparedStatement statement = conn.prepareStatement(sql);
-            for (int reservation_id : reservationIds) {
-                statement.setInt(1, reservation_id);
-                ResultSet rs = statement.executeQuery();
-                if (rs.next()) {
-                    reservationsSet.add(new Reservation.Builder()
-                            .reservationId(rs.getInt("reservation_id"))
-                            .userId(rs.getInt("user_id"))
-                            .reservationTime(rs.getTimestamp("reservation_time"))
-                            .amenity(rs.getString("amenity"))
-                            .status(rs.getNString("status"))
-                            .createdAt(rs.getTimestamp("created_at"))
-                            .updatedAt(rs.getTimestamp("updated_at"))
-                            .build());
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return reservationsSet;
-    }
-
+//    public void setFavoriteItem(String userId, Item item) {
+//        if (conn == null) {
+//            System.err.println("DB connection failed.");
+//            return;
+//        }
+//        saveItem(item);
+//        String sql = "INSERT IGNORE INTO favorites (user_id, item_id) VALUES (?, ?)";
+//        try {
+//            PreparedStatement statement = conn.prepareStatement(sql);
+//            statement.setString(1, userId);
+//            statement.setString(2, item.getId());
+//            statement.executeUpdate();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//    }
+//
 //    public void saveItem(Item item) {
 //        if (conn == null) {
 //            System.err.println("DB connection failed");
@@ -199,5 +120,88 @@ public class MySQLConnection {
 //            throwables.printStackTrace();
 //        }
 //
+//    }
+//
+//    public void unsetFavoriteItem(String userId, String itemId) {
+//        if (conn == null) {
+//            System.err.println("DB connection failed");
+//            return;
+//        }
+//        String sql = "DELETE FROM favorites WHERE user_id = ? AND item_id = ?";
+//        try {
+//            PreparedStatement statement = conn.prepareStatement(sql);
+//            statement.setString(1, userId);
+//            statement.setString(2, itemId);
+//            statement.executeUpdate();
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//    }
+//
+//    public Set<String> getFavoriteItemIds(String userId) {
+//        if (conn == null) {
+//            System.err.println("DB Connection failed");
+//            return Collections.emptySet();
+//        }
+//
+//        Set<String> favoriteItemIdsSet = new HashSet<>();
+//        String sql = "SELECT item_id FROM favorites WHERE user_id = ?";
+//        try {
+//            PreparedStatement statement = conn.prepareStatement(sql);
+//            statement.setString(1, userId);
+//            ResultSet rs = statement.executeQuery();
+//            while (rs.next()) {
+//                favoriteItemIdsSet.add(rs.getString("item_id"));
+//            }
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//
+//        return favoriteItemIdsSet;
+//    }
+//
+//    public Set<Item> getFavoriteItems(String userId) {
+//        if (conn == null) {
+//            System.err.println("DB connection failed");
+//            return Collections.emptySet();
+//        }
+//
+//        Set<Item> favoriteItemsSet = new HashSet<>();
+//
+//        try {
+//            Set<String> favoriteItemIds = getFavoriteItemIds(userId);
+//
+//            for (String itemId : favoriteItemIds) {
+//                // for each itemId this user has favorite-d, fetch the Item info from the items table
+//                // construct a full Item object and put it into the Set for return
+//                // fetch the keywords for that item from the keywords table
+//                String sql = "SELECT * FROM items WHERE item_id = ?";
+//                PreparedStatement statement = conn.prepareStatement(sql);
+//                statement.setString(1, itemId);
+//                ResultSet rs1 = statement.executeQuery();
+//
+//                sql = "SELECT keyword FROM keywords WHERE item_id = ?";
+//                statement = conn.prepareStatement(sql);
+//                statement.setString(1, itemId);
+//                ResultSet rs2 = statement.executeQuery();
+//
+//                List<String> keywords = new ArrayList<>();
+//                while (rs2.next()) {
+//                    keywords.add(rs2.getString("keyword"));
+//                }
+//                if (rs1.next()) {
+//                    String title = rs1.getString("title");
+//                    String location = rs1.getString("location");
+//                    String companyLogo = rs1.getString("company_logo");
+//                    String url = rs1.getString("url");
+//                    Item.ItemBuilder ib = new Item.ItemBuilder();
+//                    Item item = ib.id(itemId).title(title).location(location).companyLogo(companyLogo).url(url).keywords(keywords).favorite(true).build();
+//                    favoriteItemsSet.add(item);
+//                }
+//            }
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//        return favoriteItemsSet;
 //    }
 }
