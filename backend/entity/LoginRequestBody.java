@@ -1,4 +1,4 @@
-package entity;
+package backend.entity;
 
 public class LoginRequestBody {
     public String email;
