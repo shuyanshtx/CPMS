@@ -23,11 +23,36 @@ const LogIn = () => {
     const onFinish = (values) => {
         const email = values.email;
         const password = values.password;
-        if (values.email === 'resident1@gmail.com' && values.password === 'resident1') {
-            history.push('/resident')
-        } else if (values.email === 'admin@gmail.com' && values.password === 'admin') {
-            history.push('/admin')
-        }
+
+        const data = { email: email, password: password };
+
+        // const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const url = '/CPMS_war_exploded/login';
+
+        console.log(JSON.stringify(data));
+
+
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                if (data.user_type === 'resident') {
+                    history.push('/resident');
+                } else if (data.user_type === 'admin') {
+                    history.push('/admin')
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     };
 
     const onFinishFailed = (errorInfo) => {

@@ -36,37 +36,37 @@ public class MySQLConnection {
     }
 
     // return a String representing userId, or a null if not
-    public String verifyLogin(String email, String password) {
+    public int verifyLogin(String email, String password) {
         if (conn == null) {
             System.err.println("DB connection failed");
-            return null;
+            return 0;
         }
-        String sql = "SELECT id FROM users WHERE email = ? AND password = ?";
+        String sql = "SELECT user_id FROM users WHERE email = ? AND password = ?";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, email);
             statement.setString(2, password);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return rs.getString("id");
+                return rs.getInt("user_id");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return 0;
     }
 
-    public String[] getUserInfo(String userId) {
+    public String[] getUserInfo(int userId) {
         String[] userInfo = new String[7];
         if (conn == null) {
             System.err.println("DB connection failed");
             return userInfo;
         }
-        userInfo[0] = userId;
-        String sql = "SELECT first_name, last_name, unit_num, email, phone, user_type FROM users WHERE id = ?";
+        userInfo[0] = "" + userId;
+        String sql = "SELECT first_name, last_name, unit_num, email, phone, user_type FROM users WHERE user_id = ?";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, userId);
+            statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 userInfo[1] = rs.getString("first_name");
@@ -80,6 +80,23 @@ public class MySQLConnection {
             System.out.println(e.getMessage());
         }
         return userInfo;
+    }
+
+    public void updatePassword(int userId, String password) {
+        if (conn == null) {
+            System.err.println("DB connection failed.");
+            return;
+        }
+        String sql = "UPDATE users SET password = ? WHERE user_id =?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, password);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void makeReservation(ReservationRequestBody reservation) {
@@ -173,31 +190,4 @@ public class MySQLConnection {
         return reservationsSet;
     }
 
-//    public void saveItem(Item item) {
-//        if (conn == null) {
-//            System.err.println("DB connection failed");
-//            return;
-//        }
-//        String sql = "INSERT IGNORE INTO items VALUES (?, ?, ?, ?, ?)";
-//        try {
-//            PreparedStatement statement = conn.prepareStatement(sql);
-//            statement.setString(1, item.getId());
-//            statement.setString(2, item.getTitle());
-//            statement.setString(3, item.getLocation());
-//            statement.setString(4, item.getCompanyLogo());
-//            statement.setString(5, item.getUrl());
-//            statement.executeUpdate();
-//
-//            sql = "INSERT IGNORE INTO keywords VALUES (?, ?)";
-//            statement = conn.prepareStatement(sql);
-//            statement.setString(1, item.getId());
-//            for (String keyword : item.getKeywords()) {
-//                statement.setString(2, keyword);
-//                statement.executeUpdate();
-//            }
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-//
-//    }
 }
