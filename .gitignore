@@ -6,5 +6,5 @@
 node_modules
 /backend/db/*.class
 # Do not delete target
-
+/target/
 /META-INF/
