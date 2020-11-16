@@ -20,8 +20,8 @@ public class LoginServlet extends HttpServlet {
         LoginRequestBody reqBody = mapper.readValue(request.getReader(), LoginRequestBody.class);
         MySQLConnection conn = new MySQLConnection();
         LoginResponseBody responBody;
-        int user_id = conn.verifyLogin(reqBody.email, reqBody.password);
-        if (user_id != 0) {
+        String user_id = conn.verifyLogin(reqBody.email, reqBody.password);
+        if (user_id != null) {
             HttpSession session = request.getSession();
             String[] userInfo = conn.getUserInfo(user_id);
             responBody = new LoginResponseBody(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], userInfo[5], userInfo[6], "OK");
