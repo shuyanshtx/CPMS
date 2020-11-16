@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 
 const layout = {
     labelCol: {
@@ -29,7 +29,6 @@ const LogIn = () => {
         const url = '/CPMS_war_exploded/login';
 
         console.log(JSON.stringify(data));
-
 
 
         fetch(url, {

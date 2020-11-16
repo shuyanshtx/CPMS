@@ -33,6 +33,28 @@
   border-bottom: 0.5px solid gray;
 }
 
+.focus{
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  text-align: center;
+  width: 80%;
+  border-bottom: 0.5px solid gray;
+  background-color: #cdf0f0;
+  border-radius: 5px;
+}
+
+.signout {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  width: 80%;
+  font-size: smaller;
+}
+
 .title{
   font-size: 20px;
   font-weight: bold;
@@ -61,4 +83,31 @@
 .ant-layout-content {
   background:#fff;
   min-height: 120px;
+}
+
+.partTitle{
+  font-size: larger;
+  border-bottom: 0.5px solid rgb(211, 205, 205);
+}
+
+.pickDate{
+  margin-top: 40px;
+}
+
+.dropdownA{
+  margin-top: 20px;
+  margin-right: 30px;
+}
+.dropdownB{
+  margin-top: 87px;
+  margin-right: 30px;
+}
+
+
+.submit{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+  width: 20%;
 }

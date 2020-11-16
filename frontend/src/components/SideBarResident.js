@@ -20,6 +20,7 @@ const SideBarResident = () => {
                 <Menu.Item className="tab"><Link to="/resident/reservations">Reservations</Link></Menu.Item>
                 <Menu.Item className="tab"><Link to="/resident/maintenance">Maintenance</Link></Menu.Item>
                 <Menu.Item className="tab"><Link to="/resident/messages">Messages</Link></Menu.Item>
+                <Menu.Item className="signout"><Link to="/">SignOut</Link></Menu.Item>
             </Menu>
         </div>
     )
