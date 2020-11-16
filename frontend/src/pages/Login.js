@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
-import { Redirect, useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const layout = {
     labelCol: {
@@ -23,12 +23,14 @@ const LogIn = () => {
     const onFinish = (values) => {
         const email = values.email;
         const password = values.password;
+
         const data = { email: email, password: password };
 
         // const proxyurl = "https://cors-anywhere.herokuapp.com/";
         const url = '/CPMS_war_exploded/login';
 
         console.log(JSON.stringify(data));
+
 
 
         fetch(url, {
@@ -51,7 +53,6 @@ const LogIn = () => {
             .catch((error) => {
                 console.error('Error:', error);
             });
-
     };
 
     const onFinishFailed = (errorInfo) => {
