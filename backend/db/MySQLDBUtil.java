@@ -1,4 +1,4 @@
-package backend.db;
+package db;
 
 public class MySQLDBUtil {
     private static final String INSTANCE = "cpms-instance.cwlklefwchrb.us-west-1.rds.amazonaws.com";

@@ -1,8 +1,8 @@
-package backend.servlet;
+package servlet;
 
-import backend.db.MySQLConnection;
-import backend.entity.LoginRequestBody;
-import backend.entity.LoginResponseBody;
+import db.MySQLConnection;
+import entity.LoginRequestBody;
+import entity.LoginResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
