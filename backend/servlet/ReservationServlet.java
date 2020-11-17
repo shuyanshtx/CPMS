@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Set;
@@ -21,6 +22,12 @@ public class ReservationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.setStatus(403);
+            mapper.writeValue(response.getWriter(), new ResultResponse("Session Invalid"));
+            return;
+        }
         ReservationRequestBody reservation = mapper.readValue(request.getReader(), ReservationRequestBody.class);
 
         MySQLConnection connection = new MySQLConnection();
@@ -35,6 +42,12 @@ public class ReservationServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
+        HttpSession session = req.getSession(false);
+        if (session == null) {
+            resp.setStatus(403);
+            mapper.writeValue(resp.getWriter(), new ResultResponse("Session Invalid"));
+            return;
+        }
 
         ReservationRequestBody reservation = mapper.readValue(req.getReader(), ReservationRequestBody.class);
 
@@ -49,6 +62,12 @@ public class ReservationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.setStatus(403);
+            mapper.writeValue(response.getWriter(), new ResultResponse("Session Invalid"));
+            return;
+        }
 
         int userId = Integer.parseInt(request.getParameter("user_id"));
 
