@@ -8,65 +8,62 @@ import { UserOutlined } from '@ant-design/icons';
 import SideBarResident from '../../components/SideBarResident';
 
 
-const AccountResident = () => {
+const AccountResident = ({user}) => {
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
-    const [phoneNum, setPhoneNum] = useState('');
+    const onFinish = (values) => {
+        const email = values.email;
+        const password = values.password;
 
-    const urlGet = '/CPMS_war_exploded/resident_account';
+        const data = { email: email, password: password };
 
-    useEffect(() => {
-        fetch(urlGet, {
-            method: 'GET',
+        // const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const url = '/CPMS_war_exploded/resident_account';
+
+        console.log(JSON.stringify(data));
+
+        fetch(url, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify(data),
+
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                setName(data.name);
-                setEmail(data.email);
-                setAddress(data.unitNum);
-                setPhoneNum(data.phoneNum);
+            .then((response) => {
+                if (response.status === 200) {
+                    alert("SUCCESS!")
+            
+                } else if (response.status === 408) {
+                    alert("SOMETHING WENT WRONG!")
+                }
             })
-        // // Update the document title using the browser API
-        // document.title = `You clicked ${count} times`;
-    });
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
 
     return (
         <Row>
             <Col span={4.5}>
-                <div>
-                    <div className="avatar-div">
-                        <Avatar className="center-avatar" size={100} icon={<UserOutlined />} />
-                    </div>
-                    <text className="center-text">John Doe</text>
-                    <Menu>
-                        <Menu.Item className="tab"><Link to="/resident/calendar">Calendar</Link></Menu.Item>
-                        <Menu.Item className="focus"><Link to="/resident/account">Account</Link></Menu.Item>
-                        <Menu.Item className="tab"><Link to="/resident/bookamenity">Book Amenity</Link></Menu.Item>
-                        <Menu.Item className="tab"><Link to="/resident/reservations">Reservations</Link></Menu.Item>
-                        <Menu.Item className="tab"><Link to="/resident/maintenance">Maintenance</Link></Menu.Item>
-                        <Menu.Item className="tab"><Link to="/resident/messages">Messages</Link></Menu.Item>
-                        <Menu.Item className="signout"><Link to="/">SignOut</Link></Menu.Item>
-                    </Menu>
-                </div>
-
+                <SideBarResident user={user} />
             </Col>
             <Col span={5.5}>
                 <div>
                     <br /><br /><br /><br />
-                    Name: { name } <br />
-                    Email: { email} <br />
-                    Address: { address } <br />
-                    Phone: { phoneNum } <br />
+                    Name: { user.name } <br />
+                    Email: { user.email} <br />
+                    Address: { user.address } <br />
+                    Phone: { user.phone } <br />
                     <Form
                         name="basic"
                         initialValues={{
                      }}
+                     onFinish={onFinish}
+                     onFinishFailed={onFinishFailed}
                     >
                     <Form.Item
                         label="Password"
@@ -80,6 +77,13 @@ const AccountResident = () => {
                     >
                     <Input />
                     </Form.Item>
+
+                    <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Change password!
+                    </Button>
+                    </Form.Item>
+
                     </Form>
                 </div>
             </Col>

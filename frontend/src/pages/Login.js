@@ -17,7 +17,7 @@ const tailLayout = {
     },
 };
 
-const LogIn = () => {
+const LogIn = ({setUser}) => {
     let history = useHistory();
 
     const onFinish = (values) => {
@@ -31,8 +31,6 @@ const LogIn = () => {
 
         console.log(JSON.stringify(data));
 
-
-
         fetch(url, {
             method: 'POST',
             headers: {
@@ -44,10 +42,17 @@ const LogIn = () => {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
+                console.log(data);
+                setUser(
+                    {name: data.first_name + " " + data.last_name,
+                    email: data.email,
+                    address: data.unit_num,
+                    phone: data.phone}
+                    );
                 if (data.user_type === 'resident') {
-                    history.push('/resident');
+                    history.push('/resident/calendar');
                 } else if (data.user_type === 'admin') {
-                    history.push('/admin')
+                    history.push('/admin/events')
                 }
             })
             .catch((error) => {
