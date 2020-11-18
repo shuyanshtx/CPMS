@@ -55,10 +55,11 @@
   font-size: smaller;
 }
 
-.title{
+.cpms{
   font-size: 20px;
   font-weight: bold;
 }
+
 
 .ant-layout-header {
   background: #bfc5ca;
@@ -110,4 +111,71 @@
   margin-right: auto;
   margin-top: 200px;
   width: 20%;
+}
+
+
+
+/* Account page */
+.accountMiddle{
+    display: block;
+    margin-top: 150px;
+    margin-left: 200px;
+}
+
+.key{
+  font-style: normal;
+  margin: 10px;
+}
+
+/* reservation page */
+.title{
+  margin: 20px;
+  font-size: 30px;
+  font-style: oblique;
+  font-weight: 300;
+  border-bottom: 0.3px solid rgb(226, 221, 221);
+}
+
+.middle{
+  display: block;
+  margin: auto;
+  margin-top: 100px;
+  /* padding: 100px; */
+  width: 60%;
+  /* background-color: aquamarine; */
+}
+
+.bookTime{
+  border-bottom: 0.5px solid gray;
+  font-family: "Gill Sans", sans-serif;
+  color: grey;
+  font-size: medium;
+
+}
+
+.bookDetails{
+  margin-top: 10px;
+  border-radius: 4px;
+  background-color: rgb(241, 241, 241);
+  /* background: transparent; */
+}
+
+.row{
+  padding: 10px;
+
+}
+
+.amenityName{
+  font-size: medium;
+  font-family: "Gill Sans", sans-serif;
+  color: grey;
+  font-weight: 500;
+}
+
+.cancel{
+  font-size: small;
+  font-family: system-ui;
+  font-weight: 600;
+  margin-left: 260px;
+  margin-top: 2px;
 }

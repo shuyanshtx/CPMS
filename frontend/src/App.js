@@ -23,13 +23,13 @@ const { Header, Footer, Content } = Layout;
 
 function App() {
 
-  const[user, setUser] = useState(undefined);
+  const [user, setUser] = useState(undefined);
 
   return (
     <Layout>
       <Header>
         {/* <img src={starlinkLogo} className="App-logo" alt="logo" /> */}
-        <text className="title">
+        <text className="cpms">
           CPMS
         </text>
       </Header>
@@ -54,7 +54,7 @@ function App() {
             </Authorization>
             <Authorization path="/admin/messages" user={user} exact>
               <MessagesAdmin user={user} setUser={setUser} />
-            </Authorization>            
+            </Authorization>
           </Switch>
           <Switch>
             <Authorization path="/resident/calendar" user={user} exact>
@@ -78,7 +78,7 @@ function App() {
           </Switch>
           <Switch>
             <Route path="/" exact >
-              <LogIn setUser={setUser}/> 
+              <LogIn setUser={setUser} />
             </Route>
           </Switch>
         </Router>

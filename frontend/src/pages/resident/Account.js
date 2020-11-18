@@ -7,8 +7,11 @@ import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import SideBarResident from '../../components/SideBarResident';
 
+import '../../index.css';
 
-const AccountResident = ({user, setUser}) => {
+
+
+const AccountResident = ({ user, setUser }) => {
 
     const onFinish = (values) => {
         const email = values.email;
@@ -32,7 +35,7 @@ const AccountResident = ({user, setUser}) => {
             .then((response) => {
                 if (response.status === 200) {
                     alert("SUCCESS!")
-            
+
                 } else if (response.status === 408) {
                     alert("SOMETHING WENT WRONG!")
                 }
@@ -52,37 +55,37 @@ const AccountResident = ({user, setUser}) => {
                 <SideBarResident user={user} setUser={setUser} />
             </Col>
             <Col span={5.5}>
-                <div>
-                    <br /><br /><br /><br />
-                    Name: { user.name } <br />
-                    Email: { user.email} <br />
-                    Address: { user.address } <br />
-                    Phone: { user.phone } <br />
+                <div className="accountMiddle">
+                    <div className="key"> Name: {user.name}</div>
+                    <div className="key">Email: {user.email}</div>
+                    <div className="key">Address: {user.address}</div>
+                    <div className="key">Phone: {user.phone}</div>
+
                     <Form
                         name="basic"
                         initialValues={{
-                     }}
-                     onFinish={onFinish}
-                     onFinishFailed={onFinishFailed}
+                        }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
                     >
-                    <Form.Item
-                        label="Password"
-                        name="password"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input updated password!',
-                            },
-                        ]}
-                    >
-                    <Input />
-                    </Form.Item>
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input updated password!',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
 
-                    <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                        Change password!
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Change password!
                     </Button>
-                    </Form.Item>
+                        </Form.Item>
 
                     </Form>
                 </div>
