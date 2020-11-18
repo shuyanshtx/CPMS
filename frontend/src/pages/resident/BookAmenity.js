@@ -16,7 +16,7 @@ import '../../index.css'
 
 
 
-const BookAmenityResident = ({user}) => {
+const BookAmenityResident = ({user, setUser}) => {
 
     const [startDate, setStartDate] = useState(new Date());
 
@@ -35,7 +35,7 @@ const BookAmenityResident = ({user}) => {
     return (
         <Row>
             <Col span={4.5}>
-                <SideBarResident user={user} />
+                <SideBarResident user={user} setUser={setUser} />
             </Col>
             <Col span={19}>
                 {/* <div className="partTitle">

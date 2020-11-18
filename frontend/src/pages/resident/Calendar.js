@@ -9,11 +9,11 @@ import moment from "moment";
 
 // const localizer = momentLocalizer(moment);
 
-const CalendarResident = ({user}) => {
+const CalendarResident = ({user, setUser}) => {
   return (
     <Row>
       <Col span={4.5}>
-        <SideBarResident user={user} />
+        <SideBarResident user={user} setUser={setUser} />
       </Col>
       <Col span={16}>
         <div

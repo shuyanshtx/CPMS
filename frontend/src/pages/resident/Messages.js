@@ -7,11 +7,11 @@ import { UserOutlined } from '@ant-design/icons';
 import SideBarResident from '../../components/SideBarResident';
 
 
-const MessagesResident = ({user}) => {
+const MessagesResident = ({user, setUser}) => {
     return (
         <Row>
             <Col span={4.5}>
-                <SideBarResident user={user} />
+                <SideBarResident user={user} setUser={setUser} />
 
             </Col>
             <Col span={5.5}>

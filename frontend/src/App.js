@@ -38,42 +38,42 @@ function App() {
 
           <Switch>
             <Authorization path="/admin/events" user={user} exact>
-              <EventsAdmin user={user} />
+              <EventsAdmin user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/admin/reservations" user={user} exact>
-              <ReservationsAdmin user={user} />
+              <ReservationsAdmin user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/admin/maintenance" user={user} exact>
-              <MaintenanceAdmin user={user} />
+              <MaintenanceAdmin user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/admin/payments" user={user} exact>
-              <PaymentsAdmin user={user} />
+              <PaymentsAdmin user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/admin/residents" user={user} exact>
-              <ResidentsAdmin user={user} />
+              <ResidentsAdmin user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/admin/messages" user={user} exact>
-              <MessagesAdmin user={user} />
+              <MessagesAdmin user={user} setUser={setUser} />
             </Authorization>            
           </Switch>
           <Switch>
             <Authorization path="/resident/calendar" user={user} exact>
-              <CalendarResident user={user} />
+              <CalendarResident user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/resident/account" user={user} exact>
-              <AccountResident user={user} />
+              <AccountResident user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/resident/bookamenity" user={user} exact>
-              <BookAmenityResident user={user} />
+              <BookAmenityResident user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/resident/reservations" user={user} exact>
-              <ReservationsResident user={user} />
+              <ReservationsResident user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/resident/maintenance" user={user} exact>
-              <MaintenanceResident user={user} />
+              <MaintenanceResident user={user} setUser={setUser} />
             </Authorization>
             <Authorization path="/resident/messages" user={user} exact>
-              <MessagesResident user={user} />
+              <MessagesResident user={user} setUser={setUser} />
             </Authorization>
           </Switch>
           <Switch>

@@ -8,7 +8,7 @@ import { UserOutlined } from '@ant-design/icons';
 import SideBarResident from '../../components/SideBarResident';
 
 
-const AccountResident = ({user}) => {
+const AccountResident = ({user, setUser}) => {
 
     const onFinish = (values) => {
         const email = values.email;
@@ -49,7 +49,7 @@ const AccountResident = ({user}) => {
     return (
         <Row>
             <Col span={4.5}>
-                <SideBarResident user={user} />
+                <SideBarResident user={user} setUser={setUser} />
             </Col>
             <Col span={5.5}>
                 <div>

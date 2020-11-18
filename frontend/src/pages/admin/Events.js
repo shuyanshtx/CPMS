@@ -3,11 +3,11 @@ import SideBarAdmin from "../../components/SideBarAdmin";
 import { Row, Col, Calendar, Badge } from "antd";
 import moment from "moment";
 
-const EventsAdmin = () => {
+const EventsAdmin = ({user, setUser}) => {
   return (
     <Row>
       <Col span={4.5}>
-        <SideBarAdmin />
+        <SideBarAdmin user={user} setUser={setUser}/>
       </Col>
       <Col span={25}>
         <div
