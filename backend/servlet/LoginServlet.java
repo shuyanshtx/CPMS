@@ -26,6 +26,12 @@ public class LoginServlet extends HttpServlet {
             String[] userInfo = conn.getUserInfo(user_id);
             responBody = new LoginResponseBody(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], userInfo[5], userInfo[6], "OK");
             session.setAttribute("user_id", responBody.user_id);
+            session.setAttribute("first_name", responBody.first_name);
+            session.setAttribute("last_name", responBody.last_name);
+            session.setAttribute("unit_num", responBody.unit_num);
+            session.setAttribute("email", responBody.email);
+            session.setAttribute("phone", responBody.phone);
+            session.setAttribute("user_type", responBody.user_type);
         } else {
             responBody = new LoginResponseBody(null, null, null, null, null, null, null, "Log in failed");
             response.setStatus(401);

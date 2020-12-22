@@ -13,21 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @WebServlet(name = "ReservationServlet", urlPatterns = {"/reservation"})
-public class ReservationServlet extends HttpServlet {
+public class ReservationServlet extends HttpServlet implements IRoot {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.setStatus(403);
-            mapper.writeValue(response.getWriter(), new ResultResponse("Session Invalid"));
-            return;
-        }
+        HttpSession sessionAuthenticated = checkAuthentication(mapper, request, response);
+        if (sessionAuthenticated == null) return;
+
         ReservationRequestBody reservation = mapper.readValue(request.getReader(), ReservationRequestBody.class);
 
         MySQLConnection connection = new MySQLConnection();
@@ -40,14 +34,9 @@ public class ReservationServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
-        HttpSession session = req.getSession(false);
-        if (session == null) {
-            resp.setStatus(403);
-            mapper.writeValue(resp.getWriter(), new ResultResponse("Session Invalid"));
-            return;
-        }
+        HttpSession sessionAuthenticated = checkAuthentication(mapper, req, resp);
+        if (sessionAuthenticated == null) return;
 
         ReservationRequestBody reservation = mapper.readValue(req.getReader(), ReservationRequestBody.class);
 
@@ -59,17 +48,13 @@ public class ReservationServlet extends HttpServlet {
         mapper.writeValue(resp.getWriter(), resultResponse);
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
         ObjectMapper mapper = new ObjectMapper();
-        HttpSession session = request.getSession(false);
-        if (session == null) {
-            response.setStatus(403);
-            mapper.writeValue(response.getWriter(), new ResultResponse("Session Invalid"));
-            return;
-        }
+        HttpSession sessionAuthenticated = checkAuthentication(mapper, request, response);
+        if (sessionAuthenticated == null) return;
 
-        int userId = Integer.parseInt(request.getParameter("user_id"));
+        int userId = Integer.parseInt((String)sessionAuthenticated.getAttribute("user_id"));
 
         MySQLConnection connection = new MySQLConnection();
         Set<Reservation> reservations = connection.getReservations(userId);
