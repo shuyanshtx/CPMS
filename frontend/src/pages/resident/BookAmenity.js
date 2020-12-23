@@ -22,92 +22,71 @@ import '../../index.css'
 
 const BookAmenityResident = ({ user, setUser }) => {
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [amenity, setAmenity] = useState('');
-    const [time, setTime] = useState({ value: '' });
-
-    const Amenityoptions = [
-        'Cinema', 'Common Room', 'Gym', 'Spa'
+    const amenityOptions = [
+        'Common Room', 'Fitness Center', 'Golf Course', 'Health Center', 'Media Room', 'Party Room', 'Spa', 'Swimming Pool'
     ];
 
-    const TimeOptions = [
-        ' 09:00:00', ' 10:00:00', ' 11:00:00', ' 12:00:00', '13:00:00', '14:00:00',
-        '15:00:00', '16:00:00', '17:00:00', '18:00:00', '19:00:00', '20:00:00',
-        '21:00:00'
+    // times are all hardcoded to simplify operations and eliminate time conversions between formats
+    const timeOptions = [
+        '00:00:00', '01:00:00', '02:00:00', '03:00:00', '04:00:00', '05:00:00',
+        '06:00:00', '07:00:00', '08:00:00', '09:00:00', '10:00:00', '11:00:00',
+        '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00', '17:00:00',
+        '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00', '23:00:00'
     ]
-    const defaultOption = Amenityoptions[0];
-    const defaultTimeOption = TimeOptions[0];
 
-    const selectAmenity = (v) => {
-        setAmenity(v.value);
-    }
-
-    const selectTime = (v) => {
-        setTime(v);
-    }
-
-
-
-    // var s = '12-01-2020 00:03:44';
-    // const d = moment(s);
-    // console.log(d);
-    // console.log(typeof (d));
+    const [date, setDate] = useState(new Date());
+    const [amenity, setAmenity] = useState(amenityOptions[0]);
+    const [time, setTime] = useState(timeOptions[0]);
 
     const submit = (value) => {
-
-        const realTime = startDate.toDateString().concat(time.value);
-        console.log(time.value);
-        console.log(realTime);
 
         let url = '/CPMS_war_exploded/reservation';
 
         let data = {
-            "reservation_id": 1,
-            "user_id": 1111,
+            "user_id": user.id,
             "amenity": amenity,
-            "status": "upcoming",
-            "reservation_time": realTime,
+            "status": "unapproved", // two options: unapproved / approved
+            "reservation_date": date,
+            "reservation_time": time,
+            "created_at": new Date().toISOString().slice(0, 19).replace('T', ' ')
         }
 
-        console.log(data);
+        console.log("reservation to add:", data);
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-
-        })
-            .then((response) => {
-                console.log(response);
-                if (response.status === 200) {
-                    confirmAlert({
-                        title: 'Confirmation',
-                        message: 'Are you sure?',
-                        buttons: [
-                            {
-                                label: 'Yes',
-
+        confirmAlert({
+            title: 'Confirmation',
+            message: 'Are you sure?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: () => {
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
                             },
-                            {
-                                label: 'No',
-                            }
-                        ]
-                    });
+                            body: JSON.stringify(data),
 
-                } else if (response.status === 408) {
-                    alert("SOMETHING WENT WRONG!")
+                        })
+                            .then((response) => {
+                                console.log(response);
+                                if (response.status === 200) {
+                                    alert("SUCCESS");
+                                } else if (response.status === 408) {
+                                    alert("SOMETHING WENT WRONG!");
+                                }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                            });
+                    }
+                },
+                {
+                    label: 'No',
                 }
-            })
-
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
+            ]
+        });
     }
-
-
 
     return (
         <Row>
@@ -115,41 +94,39 @@ const BookAmenityResident = ({ user, setUser }) => {
                 <SideBarResident user={user} setUser={setUser} />
             </Col>
             <Col span={19}>
-                {/* <div className="partTitle">
-                    Here is Book Amenity for Resident
-                </div> */}
-                <Row>
-                    <Col span={10}>
-                        <div className="pickDate">
-                            Date:
-                            <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
-                        </div>
-                        <div className="dropdownA">
-                            <Dropdown
-                                options={Amenityoptions}
-                                onChange={selectAmenity}
-                                value={defaultOption}
-                                placeholder="Select an option" />
-                        </div>
-
-                    </Col>
-
-                    <Col span={9}>
-                        <div className="dropdownB">
-                            <Dropdown
-                                options={TimeOptions}
-                                onChange={selectTime}
-                                value={defaultTimeOption}
-                                placeholder="Select an option" />
-                        </div>
-                    </Col>
-                </Row>
-                <div>
-                    <button className="submit" onClick={submit}>Submit</button>
+                <div className="title">
+                    What amenities do you want to book? Please make reservations.
                 </div>
+                <div className="accountMiddle">
+                    <Row>
+                        <Col span={10}>
+                            <div className="pickDate">
+                                Date:&nbsp;&nbsp;
+                                <DatePicker selected={date} onChange={date => setDate(date)} />
+                            </div>
+                            <div className="dropdownA">
+                                <Dropdown
+                                    options={amenityOptions}
+                                    onChange={e => setAmenity(e.value)}
+                                    value={amenity}
+                                    placeholder="Select an amenity" />
+                            </div>
+                        </Col>
 
-
-
+                        <Col span={9}>
+                            <div className="dropdownB">
+                                <Dropdown
+                                    options={timeOptions}
+                                    onChange={e => setTime(e.value)}
+                                    value={time}
+                                    placeholder="Select a time" />
+                            </div>
+                        </Col>
+                    </Row>
+                    <div>
+                        <button className="submit" onClick={submit}>SUBMIT</button>
+                    </div>
+                </div>
             </Col>
         </Row>
 

@@ -24,6 +24,7 @@ const { Header, Footer, Content } = Layout;
 function App() {
 
   const [user, setUser] = useState(undefined);
+  const [reservationsChanged, setReservationsChanged] = useState(false);
 
   return (
     <Layout>

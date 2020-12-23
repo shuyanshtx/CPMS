@@ -28,12 +28,11 @@ const ReservationsResident = ({ user, setUser }) => {
                     alterBool(false);
                 }
                 setReservations(jsonData);
-
             })
             .catch((error) => {
             console.error('Error:', error);
         });
-    }, [reservations]);
+    }, []);
 
     const cancel = (reservationEntity) => {
         confirmAlert({
@@ -43,13 +42,20 @@ const ReservationsResident = ({ user, setUser }) => {
                 {
                     label: 'Yes',
                     onClick: () => {
+                        console.log('reservation to be deleted:', reservationEntity);
                         fetch("/CPMS_war_exploded/reservation", {
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(reservationEntity),
-                        }).catch((error) => {
+                        })
+                            .then(response => {
+                                if (response.status === 200) {
+                                    alert("SUCCESS");
+                                }
+                            })
+                            .catch((error) => {
                             console.log('Error:', error);
                         })}
                 },
@@ -69,7 +75,7 @@ const ReservationsResident = ({ user, setUser }) => {
             <Col span={19} className="reservation">
 
                 <div className="title">
-                    Reservations
+                    Reservations.
                 </div>
 
                 { bool ?
@@ -79,20 +85,26 @@ const ReservationsResident = ({ user, setUser }) => {
                     <div className="middle">
                         {
                             reservations.map((reservation, index) => {
-                                const dateTime = new Date(reservation.reservationTime);
-                                return <div>
+                                const date = new Date(reservation.reservationDate);
+                                const approved = reservation.status === "approved";
+                                // index added as key to resolve Warning:
+                                // Each child in a list should have a unique "key" prop
+                                return <div key={index}>
                                     <div className={"bookTime"}>
-                                        { dateTime.toLocaleDateString()}
+                                        { date.toLocaleDateString() }
                                     </div>
                                     <div className="bookDetails">
                                         <Row className="row">
-                                            <Col span={8} className="amenityName">{ dateTime.toLocaleTimeString() + " " + reservation.amenity }</Col>
-                                            <Col span={1} className="cancel"><button onClick={
+                                            <Col span="14"> <span className="amenityName"> {reservation.reservationTime + " " + reservation.amenity}</span>
+                                                {approved ? "  (approved)" : "  (not yet approved)"}</Col>
+                                            <Col span="1" className={"cancel floatRight"}>
+                                                <button onClick={
                                                 () => {
                                                     cancel({
-                                                        reservationId: reservation.reservationId,
-                                                        userId: reservation.userId,
-                                                        reservationTime: reservation.reservationTime,
+                                                        reservation_id: reservation.reservationId,
+                                                        user_id: reservation.userId,
+                                                        reservation_date: reservation.reservationDate,
+                                                        reservation_time: reservation.reservationTime,
                                                         amenity: reservation.amenity,
                                                         status: reservation.status
                                                     });
@@ -104,26 +116,6 @@ const ReservationsResident = ({ user, setUser }) => {
                             })
                         }
                     </div>
-                    /*
-                    <div className="middle">
-                        <div className="bookTime">
-                            Sunday, November 1st, 2020
-                         </div>
-
-                        <div>
-                            <div className="bookDetails">
-                                <Row className="row">
-                                    <Col span={8} className="amenityName">Common Room 09:00</Col>
-                                    <Col span={1} className="cancel"><button onClick={cancelButton}>CANCEL</button></Col>
-                                </Row>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                    */
-
                 }
 
             </Col>

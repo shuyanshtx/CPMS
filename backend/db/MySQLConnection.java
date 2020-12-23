@@ -104,14 +104,15 @@ public class MySQLConnection {
             System.err.println("DB connection failed.");
             return;
         }
-        String sql = "INSERT INTO reservations (reservation_id, user_id, reservation_time, amenity, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO reservations (user_id, reservation_date, reservation_time, amenity, status, created_at) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, reservation.getReservationId());
-            statement.setInt(2, reservation.getUserId());
+            statement.setInt(1, reservation.getUserId());
+            statement.setDate(2, reservation.getReservationDate());
             statement.setString(3, reservation.getReservationTime());
             statement.setString(4, reservation.getAmenity());
             statement.setString(5, reservation.getStatus());
+            statement.setTimestamp(6, reservation.getCreatedAt());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -176,7 +177,8 @@ public class MySQLConnection {
                     reservationsSet.add(new Reservation.Builder()
                             .reservationId(rs.getInt("reservation_id"))
                             .userId(rs.getInt("user_id"))
-                            .reservationTime(rs.getTimestamp("reservation_time"))
+                            .reservationDate(rs.getDate("reservation_date"))
+                            .reservationTime(rs.getString("reservation_time"))
                             .amenity(rs.getString("amenity"))
                             .status(rs.getNString("status"))
                             .createdAt(rs.getTimestamp("created_at"))

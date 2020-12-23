@@ -57,7 +57,8 @@ public class MySQLTableCreation {
             sql = "CREATE TABLE reservations ("
                     + "reservation_id INT UNSIGNED NOT NULL AUTO_INCREMENT,"
                     + "user_id INT UNSIGNED NOT NULL,"
-                    + "reservation_time DATETIME,"
+                    + "reservation_date DATE NOT NULL,"
+                    + "reservation_time VARCHAR(255),"
                     + "amenity VARCHAR(255),"
                     + "status VARCHAR(255),"
                     + "created_at TIMESTAMP,"
@@ -103,13 +104,13 @@ public class MySQLTableCreation {
             sql = "INSERT INTO users(password, first_name, last_name, email, phone, user_type) VALUES('emmasmith', 'Emma', 'Smith', 'emmasmith101@gmail.com', '9876543210', 'admin')";
             statement.executeUpdate(sql);
 
-            sql = "INSERT INTO reservations(user_id, reservation_time, amenity, status, created_at) VAlUES('1', '2021-07-26 09:00:00', 'Common Room', 'unapproved', current_timestamp())";
+            sql = "INSERT INTO reservations(user_id, reservation_date, reservation_time, amenity, status, created_at) VAlUES('1', '2021-07-26', '09:00:00', 'Common Room', 'unapproved', current_timestamp())";
             statement.executeUpdate(sql);
 
-            sql = "INSERT INTO reservations(user_id, reservation_time, amenity, status, created_at) VAlUES('1', '2021-07-28 10:00:00', 'Pool', 'unapproved', current_timestamp())";
+            sql = "INSERT INTO reservations(user_id, reservation_date, reservation_time, amenity, status, created_at) VAlUES('1', '2021-07-28', '10:00:00', 'Swimming Pool', 'unapproved', current_timestamp())";
             statement.executeUpdate(sql);
 
-            sql = "INSERT INTO reservations(user_id, reservation_time, amenity, status, created_at) VAlUES('1', '2021-07-26 11:00:00', 'Common Room', 'unapproved', current_timestamp())";
+            sql = "INSERT INTO reservations(user_id, reservation_date, reservation_time, amenity, status, created_at) VAlUES('1', '2021-07-26', '11:00:00', 'Common Room', 'unapproved', current_timestamp())";
             statement.executeUpdate(sql);
 
             conn.close();

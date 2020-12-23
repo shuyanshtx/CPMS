@@ -44,11 +44,14 @@ const LogIn = ({setUser}) => {
                 console.log('Success:', data);
                 console.log(data);
                 setUser(
-                    {name: data.first_name + " " + data.last_name,
-                    email: data.email,
-                    address: data.unit_num,
-                    phone: data.phone}
-                    );
+                    {
+                        id: data.user_id,
+                        name: data.first_name + " " + data.last_name,
+                        email: data.email,
+                        address: data.unit_num,
+                        phone: data.phone,
+                        type: data.user_type
+                    });
                 if (data.user_type === 'resident') {
                     history.push('/resident/calendar');
                 } else if (data.user_type === 'admin') {

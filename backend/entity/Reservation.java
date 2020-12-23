@@ -2,9 +2,9 @@ package entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -12,13 +12,13 @@ import java.util.Objects;
 public class Reservation {
     private int reservationId;
     private int userId;
-    private Timestamp reservationTime;
+    private Date reservationDate;
+    private String reservationTime;
     private String amenity;
     private String status;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    @JsonProperty("reservation_id")
     public int getReservationId() {
         return reservationId;
     }
@@ -27,9 +27,11 @@ public class Reservation {
         return userId;
     }
 
-    public Timestamp getReservationTime() {
-        return reservationTime;
+    public Date getReservationDate() {
+        return reservationDate;
     }
+
+    public String getReservationTime() { return reservationTime; }
 
     public String getAmenity() {
         return amenity;
@@ -54,6 +56,7 @@ public class Reservation {
         Reservation that = (Reservation) o;
         return reservationId == that.reservationId &&
                 userId == that.userId &&
+                Objects.equals(reservationDate, that.reservationDate) &&
                 Objects.equals(reservationTime, that.reservationTime) &&
                 Objects.equals(amenity, that.amenity) &&
                 Objects.equals(status, that.status) &&
@@ -63,7 +66,7 @@ public class Reservation {
 
     @Override
     public int hashCode() {
-        return Objects.hash(reservationId, userId, reservationTime, amenity, status, createdAt, updatedAt);
+        return Objects.hash(reservationId, userId, reservationDate, reservationTime, amenity, status, createdAt, updatedAt);
     }
 
     @Override
@@ -71,6 +74,7 @@ public class Reservation {
         return "Reservation{" +
                 "id=" + reservationId +
                 ", userId=" + userId +
+                ", reservationDate=" + reservationDate +
                 ", reservationTime=" + reservationTime +
                 ", amenity='" + amenity + '\'' +
                 ", status='" + status + '\'' +
@@ -82,7 +86,8 @@ public class Reservation {
     public static class Builder {
         private int reservationId;
         private int userId;
-        private Timestamp reservationTime;
+        private Date reservationDate;
+        private String reservationTime;
         private String amenity;
         private String status;
         private Timestamp createdAt;
@@ -98,7 +103,12 @@ public class Reservation {
             return this;
         }
 
-        public Builder reservationTime(Timestamp reservationTime) {
+        public Builder reservationDate(Date reservationDate) {
+            this.reservationDate = reservationDate;
+            return this;
+        }
+
+        public Builder reservationTime(String reservationTime) {
             this.reservationTime = reservationTime;
             return this;
         }
@@ -127,6 +137,7 @@ public class Reservation {
             Reservation reservation = new Reservation();
             reservation.reservationId = reservationId;
             reservation.userId = userId;
+            reservation.reservationDate = reservationDate;
             reservation.reservationTime = reservationTime;
             reservation.amenity = amenity;
             reservation.status = status;

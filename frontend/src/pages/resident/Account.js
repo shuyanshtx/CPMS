@@ -55,6 +55,9 @@ const AccountResident = ({ user, setUser }) => {
                 <SideBarResident user={user} setUser={setUser} />
             </Col>
             <Col span={5.5}>
+                <div className="title">
+                    Here is your account information. Change password if you want.
+                </div>
                 <div className="accountMiddle">
                     <div className="key"> Name: {user.name}</div>
                     <div className="key">Email: {user.email}</div>
@@ -82,9 +85,7 @@ const AccountResident = ({ user, setUser }) => {
                         </Form.Item>
 
                         <Form.Item>
-                            <Button type="primary" htmlType="submit">
-                                Change password!
-                    </Button>
+                            <Button className="submit">SUBMIT</Button>
                         </Form.Item>
 
                     </Form>
