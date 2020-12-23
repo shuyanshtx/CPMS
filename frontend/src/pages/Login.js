@@ -39,10 +39,14 @@ const LogIn = ({setUser}) => {
             body: JSON.stringify(data),
 
         })
-            .then(response => response.json())
+            .then( (response) => {
+                if (response.status == 401) {
+                    alert("Unauthorized");
+                }
+                return response.json();
+            })
             .then(data => {
                 console.log('Success:', data);
-                console.log(data);
                 setUser(
                     {
                         id: data.user_id,
