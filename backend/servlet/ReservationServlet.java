@@ -37,11 +37,17 @@ public class ReservationServlet extends HttpServlet implements IRoot {
         ObjectMapper mapper = new ObjectMapper();
         HttpSession sessionAuthenticated = checkAuthentication(mapper, req, resp);
         if (sessionAuthenticated == null) return;
+        String userType = (String) sessionAuthenticated.getAttribute("user_type");
 
         ReservationRequestBody reservation = mapper.readValue(req.getReader(), ReservationRequestBody.class);
 
         MySQLConnection connection = new MySQLConnection();
-        connection.deleteReservation(reservation.getReservationId());
+        if (userType.equals("resident")) {
+            connection.deleteReservation(reservation.getReservationId());
+        } else {
+            // admin
+            connection.alterReservationApproval(reservation.getReservationId());
+        }
         connection.close();
 
         ResultResponse resultResponse = new ResultResponse("SUCCESS");
@@ -55,9 +61,10 @@ public class ReservationServlet extends HttpServlet implements IRoot {
         if (sessionAuthenticated == null) return;
 
         int userId = Integer.parseInt((String)sessionAuthenticated.getAttribute("user_id"));
+        String userType = (String) sessionAuthenticated.getAttribute("user_type");
 
         MySQLConnection connection = new MySQLConnection();
-        Set<Reservation> reservations = connection.getReservations(userId);
+        Set<Reservation> reservations = connection.getReservations(userId, userType);
         connection.close();
         mapper.writeValue(response.getWriter(), reservations);
     }

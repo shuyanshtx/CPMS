@@ -1,5 +1,6 @@
 package db;
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import entity.Reservation;
 import entity.ReservationRequestBody;
 
@@ -87,7 +88,7 @@ public class MySQLConnection {
             System.err.println("DB connection failed.");
             return;
         }
-        String sql = "UPDATE users SET password = ? WHERE user_id =?";
+        String sql = "UPDATE users SET password = ? WHERE user_id = ?";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, password);
@@ -96,7 +97,6 @@ public class MySQLConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     public void makeReservation(ReservationRequestBody reservation) {
@@ -134,7 +134,54 @@ public class MySQLConnection {
         }
     }
 
-    public Set<Integer> getReservationIds(int userId) {
+    public String getReservationStatus(int reservationId) {
+        if (conn == null) {
+            System.err.println("DB connection failed");
+            return "";
+        }
+        String status = "";
+        String sql = "SELECT status FROM reservations WHERE reservation_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, reservationId);
+            ResultSet rs = statement.executeQuery();
+            boolean hasEntry = false;
+            while (rs.next()) {
+                if (hasEntry) {
+                    System.err.println("Duplicate reservations detected.");
+                }
+                status = rs.getString("status");
+                hasEntry = true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return status;
+    }
+
+    public void alterReservationApproval(int reservationId) {
+        if (conn == null) {
+            System.err.println("DB connection failed");
+            return;
+        }
+        String status = getReservationStatus(reservationId);
+        String newStatus = "approved";
+        if (status.equals("approved")) {
+            newStatus = "unapproved";
+        }
+
+        String sql = "UPDATE reservations SET status = ? WHERE reservation_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, newStatus);
+            statement.setInt(2, reservationId);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public Set<Integer> getReservationIds(int userId, String userType) {
         if (conn == null) {
             System.err.println("DB Connection failed");
             return new HashSet<>();
@@ -143,9 +190,16 @@ public class MySQLConnection {
         Set<Integer> reservationsIdsSet = new HashSet<>();
 
         try {
-            String sql = "SELECT reservation_id FROM reservations WHERE user_id = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, userId);
+            String sql;
+            PreparedStatement statement;
+            if (userType == "resident") {
+                sql = "SELECT reservation_id FROM reservations WHERE user_id = ?";
+                statement = conn.prepareStatement(sql);
+                statement.setInt(1, userId);
+            } else {
+                sql = "SELECT reservation_id FROM reservations";
+                statement = conn.prepareStatement(sql);
+            }
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int reservationId = rs.getInt("reservation_id");
@@ -154,18 +208,17 @@ public class MySQLConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return reservationsIdsSet;
     }
 
-    public Set<Reservation> getReservations(int userId) {
+    public Set<Reservation> getReservations(int userId, String userType) {
         if (conn == null) {
             System.err.println("DB connection failed");
             return new HashSet<>();
         }
 
         Set<Reservation> reservationsSet = new HashSet<>();
-        Set<Integer> reservationIds = getReservationIds(userId);
+        Set<Integer> reservationIds = getReservationIds(userId, userType);
 
         String sql = "SELECT * FROM reservations WHERE reservation_id = ?";
         try {
