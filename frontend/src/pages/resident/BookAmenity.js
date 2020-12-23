@@ -102,7 +102,7 @@ const BookAmenityResident = ({ user, setUser }) => {
                         <Col span={10}>
                             <div className="pickDate">
                                 Date:&nbsp;&nbsp;
-                                <DatePicker selected={date} onChange={date => setDate(date)} />
+                                <DatePicker selected={date} className="dateBox" onChange={date => setDate(date)} />
                             </div>
                             <div className="dropdownA">
                                 <Dropdown

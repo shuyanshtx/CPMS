@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { Row, Col } from 'antd';
-import { Link } from 'react-router-dom';
-import { Menu } from 'antd';
-import { Avatar } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import SideBarResident from '../../components/SideBarResident';
 
 import '../../index.css';
 
-
-
 const AccountResident = ({ user, setUser }) => {
 
-    const onFinish = (values) => {
+    const onFinished = (values) => {
         const email = values.email;
         const password = values.password;
 
@@ -68,7 +62,7 @@ const AccountResident = ({ user, setUser }) => {
                         name="basic"
                         initialValues={{
                         }}
-                        onFinish={onFinish}
+                        onFinish={onFinished}
                         onFinishFailed={onFinishFailed}
                     >
                         <Form.Item
@@ -81,11 +75,11 @@ const AccountResident = ({ user, setUser }) => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input.Password />
                         </Form.Item>
 
                         <Form.Item>
-                            <Button className="submit">SUBMIT</Button>
+                            <Button type="default" htmlType="submit">SUBMIT</Button>
                         </Form.Item>
 
                     </Form>

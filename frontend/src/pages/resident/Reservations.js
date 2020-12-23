@@ -8,10 +8,8 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import '../../index.css';
 
-
-
 const ReservationsResident = ({ user, setUser }) => {
-    const [bool, alterBool] = useState(true);
+    const [reservationsCount, setReservationsCount] = useState(-1);
     const [reservations, setReservations] = useState([]);
     useEffect(() => {
         fetch("/CPMS_war_exploded/reservation", {
@@ -23,9 +21,9 @@ const ReservationsResident = ({ user, setUser }) => {
             .then(res => res.json())
             .then(jsonData => {
                 console.log('Success:', jsonData);
-                console.log(jsonData.length);
+                setReservationsCount(0);
                 if (jsonData.length !== 0) {
-                    alterBool(false);
+                    setReservationsCount(jsonData.length);
                 }
                 setReservations(jsonData);
             })
@@ -66,39 +64,30 @@ const ReservationsResident = ({ user, setUser }) => {
         });
     };
 
-    return (
-        <Row>
-            <Col span={4.5}>
-                <SideBarResident user={user} setUser={setUser} />
-
-            </Col>
-            <Col span={19} className="reservation">
-
-                <div className="title">
-                    Reservations.
-                </div>
-
-                { bool ?
-                    <div className="middle">
-                        You have no reservations.
-                    </div> :
-                    <div className="middle">
-                        {
-                            reservations.map((reservation, index) => {
-                                const date = new Date(reservation.reservationDate);
-                                const approved = reservation.status === "approved";
-                                // index added as key to resolve Warning:
-                                // Each child in a list should have a unique "key" prop
-                                return <div key={index}>
-                                    <div className={"bookTime"}>
-                                        { date.toLocaleDateString() }
-                                    </div>
-                                    <div className="bookDetails">
-                                        <Row className="row">
-                                            <Col span="14"> <span className="amenityName"> {reservation.reservationTime + " " + reservation.amenity}</span>
-                                                {approved ? "  (approved)" : "  (not yet approved)"}</Col>
-                                            <Col span="1" className={"cancel floatRight"}>
-                                                <button onClick={
+    function renderSwitch(param) {
+        switch(param) {
+            case -1:
+                return <div className="middle"> Fetching your reservations ... </div>;
+            case 0:
+                return <div className="middle"> You have no reservations. </div>;
+            default:
+                return <div className="middle">
+                    {
+                        reservations.map((reservation, index) => {
+                            const date = new Date(reservation.reservationDate);
+                            const approved = reservation.status === "approved";
+                            // index added as key to resolve Warning:
+                            // Each child in a list should have a unique "key" prop
+                            return <div key={index}>
+                                <div className={"bookTime"}>
+                                    { date.toLocaleDateString() }
+                                </div>
+                                <div className="bookDetails">
+                                    <Row className="row">
+                                        <Col span="14"> <span className="amenityName"> {reservation.reservationTime + " " + reservation.amenity}</span>
+                                            {approved ? "  (approved)" : "  (not yet approved)"}</Col>
+                                        <Col span="1" className={"cancel floatRight"}>
+                                            <button onClick={
                                                 () => {
                                                     cancel({
                                                         reservation_id: reservation.reservationId,
@@ -110,14 +99,27 @@ const ReservationsResident = ({ user, setUser }) => {
                                                     });
                                                 }
                                             }>CANCEL</button></Col>
-                                        </Row>
-                                    </div>
+                                    </Row>
                                 </div>
-                            })
-                        }
-                    </div>
-                }
+                            </div>
+                        })
+                    }
+                </div>
+        }
+    }
 
+    return (
+        <Row>
+            <Col span={4.5}>
+                <SideBarResident user={user} setUser={setUser} />
+
+            </Col>
+            <Col span={19} className="reservation">
+
+                <div className="title">
+                    Reservations.
+                </div>
+                {renderSwitch(reservationsCount)}
             </Col>
         </Row>
     )
